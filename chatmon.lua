@@ -51,8 +51,8 @@ showblocks = false
 talk_channels = S{0,1,4,5,26,27}
 last_chat = T{}
 player = {
-    id = (windower.ffxi.get_player() or {}).id,
-    name = (windower.ffxi.get_player() or {}).name,
+	id = (windower.ffxi.get_player() or {}).id,
+	name = (windower.ffxi.get_player() or {}).name,
 }
 settings_map = T{
 	SoundInterval = {vtype = "number", desc = "Number of seconds that must elapse before another sound may play."},
@@ -367,8 +367,8 @@ windower.register_event('incoming text', function(original, modified, original_m
 end)
 
 windower.register_event('addon command',function (...)
-    local command = L{...}
-    local action = command[1]
+	local command = L{...}
+	local action = command[1]
 
 	if action == "showchannels" or action == "sc" then
 		-- TOGGLE SHOW CHANNELS command
@@ -762,8 +762,8 @@ windower.register_event('addon command',function (...)
 end)
 
 windower.register_event('incoming chunk', function(id,data)
-    if id == 0x017 then
-        local chat = packets.parse('incoming', data)
+	if id == 0x017 then
+		local chat = packets.parse('incoming', data)
 		local mode = chat['Mode']
 		local sender = chat['Sender Name']
 		local message = windower.convert_auto_trans(chat['Message']):lower()
@@ -800,39 +800,39 @@ windower.register_event('incoming chunk', function(id,data)
 		end
 		
 		-- Special case audio alerts
-        if mode == 3 and sender ~= player.name then
+		if mode == 3 and sender ~= player.name then
 			if (config.settings.TellSound) then
 				playSound(config.settings.TellSound)
 			end
-        elseif talk_channels:contains(mode) and message:contains(player.name:lower()) then
+		elseif talk_channels:contains(mode) and message:contains(player.name:lower()) then
 			if (config.settings.TalkSound) then
 				playSound(config.settings.TalkSound)
 			end
-        end
-    elseif id == 0x0DC then
+		end
+	elseif id == 0x0DC then
 		if (config.settings.InviteSound) then
 			playSound(config.settings.InviteSound)
 		end
-    end
+	end
 end)
 
 windower.register_event('emote', function(emote_id,sender_id,target_id)
-    if target_id == player.id and sender_id ~= player.id then
+	if target_id == player.id and sender_id ~= player.id then
 		if (config.settings.EmoteSound) then
 			playSound(config.settings.EmoteSound)
 		end
-    end
+	end
 end)
 
 windower.register_event('examined', function(sender_name,sender_index)
-    if sender_name ~= player.name then
+	if sender_name ~= player.name then
 		if (config.settings.ExamineSound) then
 			playSound(config.settings.ExamineSound)
 		end
-    end
+	end
 end)
 
 windower.register_event('login', function(name)
-    player.id = windower.ffxi.get_player().id
-    player.name = name
+	player.id = windower.ffxi.get_player().id
+	player.name = name
 end)

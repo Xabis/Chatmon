@@ -19,9 +19,9 @@ end
 
 -- Loads a file and returns a settings object
 function Settings:load(file)
-    if type(file) == "string" then
-        file = files.new(file, true)
-    end
+	if type(file) == "string" then
+		file = files.new(file, true)
+	end
 	
 	local obj = {
 		_file = file,
@@ -30,12 +30,12 @@ function Settings:load(file)
 	}
 
 	setmetatable(obj, self)
-    self.__index = function(t, k)
+	self.__index = function(t, k)
 		if t._data[k] ~= nil then
 			return t._data[k]
 		end
 		return self[k]
-    end
+	end
 	obj:reload()
 	return obj
 end

@@ -139,7 +139,7 @@
 			mode: match or regex. If match, uses wc_match rules. Defaults to match if not specified
 			from: Limit match to specified channel modes. This is different than a normal channel.
 				  Currently, only Shout, Yell, and Tell is recognized
-		    value: The search pattern. Binary characters may be written using the \x## sequence
+			value: The search pattern. Binary characters may be written using the \x## sequence
 	-->
 	<filter from="Shout|Yell" mode="match">
 		*ffxi gil*
