@@ -1,5 +1,5 @@
 # Chatmon
-Author: Xabis  
+Author: Xabis / Aurum (Asura)
 Version: 1.0  
 Chat Monitor
 
