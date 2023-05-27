@@ -1,3 +1,6 @@
+
+
+
 --Copyright 2022 Carl Lewis
 
 --Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -47,6 +50,7 @@ lastplay = 0
 soundinterval = 0
 showchannels = false
 showblocks = false
+muted = false
 talk_channels = S{0,1,4,5,26,27}
 last_chat = T{}
 player = {
@@ -167,12 +171,14 @@ end
 
 -- plays a sound, limited by configured delay
 function playSound(sound)
-	local file = resolveSound(sound)
-	if file then
-		local current = os.clock()
-		if (current-soundinterval >= lastplay) then
-			windower.play_sound(file)
-			lastplay = current
+	if not muted then
+		local file = resolveSound(sound)
+		if file then
+			local current = os.clock()
+			if (current-soundinterval >= lastplay) then
+				windower.play_sound(file)
+				lastplay = current
+			end
 		end
 	end
 end
@@ -378,6 +384,14 @@ windower.register_event('addon command',function (...)
 			windower.add_to_chat(CHANNEL_GENERAL, "Chatmon: Blocked text will be marked and echoed.")
 		else
 			windower.add_to_chat(CHANNEL_GENERAL, "Chatmon: Blocked text will be no longer be visible.")
+		end
+	elseif action == "mute" or action == "m" then
+		-- TOGGLE SHOW BLOCKS command
+		muted = not muted
+		if muted then
+			windower.add_to_chat(CHANNEL_GENERAL, "Chatmon: Audio triggers have been muted.")
+		else
+			windower.add_to_chat(CHANNEL_GENERAL, "Chatmon: Audio triggers no longer muted.")
 		end
 	elseif action == "test" then
 		-- TEST MATCH command
@@ -751,6 +765,7 @@ windower.register_event('addon command',function (...)
 		print("  showblocks: Text blocked by a filter will be echoed in the log for debugging purposes (toggle)")
 		print("  test: Utility to test pattern matching")
 		print("  play: Utility to test if a sound is valid")
+		print("  mute: Temporarily toggle audio triggers on/off")
 	end
 end)
 
